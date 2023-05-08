@@ -1,10 +1,24 @@
 # symchecker
-checks if a file is a symlink or not
 
-This project was done for a small business that sells electronic components online. They have over 1.3 million files on a NAS device, most of them were symbolic links to a generic image of a component's case.
+This Python application checks the file system for files and symlinks and adds data to an SQL database accordingly. This code was written for a small business that sells electronic components online. They have over 1.3 million files on a NAS device, most of which are symbolic links to a generic image of a component's case.
 
-I was asked to write some code that would check whether a file was a symlink or not and write to a csv the following: filename, l or f (symlink or file), the path to the actual file if it was a symlink.
+## Prerequisites
+- Python 3.x
+- pymysql package
+- MySQL Server
 
-After completing this, I was asked to write to two different csvs (one for symlinks and one for normal files) as the manager was having some problems using just the one csv. Finally, to make the managers life easier in the future, i was asked to write some code to run sql commands to update his database
+## Installation
+1. Clone or download the project files.
+2. Install pymysql using pip: `pip install pymysql`
+3. Make sure you have a MySQL Server instance running.
+4. Update the connection details in the cnxn variable in the symchecker.py file.
 
-Unfortunately, I didn't use git to keep track of all the changes as this was one of my first projects, so this repo only includes the final version.
+## Usage
+1. Open the command prompt or terminal and navigate to the project directory.
+2. Run the symchecker.py file: `python symchecker.py`
+
+The application will iterate through the file system starting from the working_dir directory specified in the code.
+Files and symlinks will be identified and data will be added to the `pictures_location_table` table in the SQL database.
+The `products_table` table will be updated with the `productid` value from `pictures_location_table` where `productcode` values match.
+Two CSV files will be created in the project directory: `filepath_to_file.csv` and `filepath_to_symlink.csv`. These files will contain the details of the files and symlinks found in the file system.
+##### *Note*: This application will truncate the pictures_location_table table before inserting new data. Make sure you have a backup of the data before running the application.
